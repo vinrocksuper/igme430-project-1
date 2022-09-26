@@ -13,7 +13,6 @@ const jsonUrlStruct = {
     '/notReal': jsonHandler.notFound,
     '/': htmlHandler.getIndex,
     '/style.css': htmlHandler.getCSS,
-    '/canvas-controller.js': htmlHandler.getJS,
   },
   HEAD: {
     notFound: jsonHandler.notFoundMeta,
@@ -54,7 +53,6 @@ const handlePost = (request, response, parsedUrl) => {
 // eslint-disable-next-line consistent-return
 const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
-  console.log(parsedUrl);
   if (request.method === 'POST') {
     handlePost(request, response, parsedUrl);
   } else if (request.method === 'GET' || request.method === 'HEAD') {
