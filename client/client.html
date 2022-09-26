@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-  <title>Our simple HTTP server</title>
+  <title>Simple Http Server</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-
+	<script type="module" src="../src/canvas-controller.js"></script>
   <script>
     //Handles our FETCH response. This function is async because it
     //contains an await.
@@ -133,6 +133,11 @@
 </head>
 
 <body>
+  <canvas width="640" height="480">
+    This browser is not supported :(
+  </canvas>
+
+
   <section id="top">
     <h3>POST Status Code Tests</h3>
     <form id="nameForm" action="/addUser" method="post">
