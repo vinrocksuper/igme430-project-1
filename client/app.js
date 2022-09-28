@@ -1,7 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-undef */
-
 let walkers = [];
 let foods = [];
 
@@ -103,7 +99,7 @@ function canvasClicked(e) {
 
 function checkFoodCollisions() {
   walkers.forEach((walker) => {
-    for (let i = 0; i < foods.length; i++) {
+    for (const i of foods) {
       if (checkCollisions(walker, foods[i])) {
         foods.splice(i, 1);
         walker.eatFood();
@@ -161,8 +157,18 @@ function drawEverything() {
   cleanupDeadWalkers();
 }
 
-// I don't think node.js knows what window is
-// which makes it kind of awkward in that regard
+function getWalkers() {
+  alert('saving walkers');
+  console.log('walkers are: ', walkers)
+  return walkers;
+}
+
+function setWalkers(loadedData) {
+  cls();
+  walkers = loadedData;
+  paused = true;
+}
+
 window.onload = () => {
   canvas = document.querySelector('canvas');
   ctx = canvas.getContext('2d');

@@ -6,7 +6,7 @@ const fs = require('fs'); // pull in the file system module
 // This not the best way to load files unless you have few files.
 const index = fs.readFileSync(`${__dirname}/../client/client.html`);
 const css = fs.readFileSync(`${__dirname}/../client/style.css`);
-const js = fs.readFileSync(`${__dirname}/../src/app.js`);
+const js = fs.readFileSync(`${__dirname}/../client/app.js`);
 
 // function to get the index page
 const getIndex = (request, response) => {

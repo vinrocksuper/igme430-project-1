@@ -4,7 +4,7 @@
 <head>
   <title>Simple Http Server</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-	<script type="module" src="../src/app.js"></script>
+  <script type="module" src="/app.js"></script>
   <script>
     //Handles our FETCH response. This function is async because it
     //contains an await.
@@ -37,17 +37,17 @@
 
       //Parse the response to json. This works because we know the server always
       //sends back json. Await because .json() is an async function.
-      try{
+      try {
         let obj = await response.json();
-              //If we have a message, display it.
-      if (obj.users) {
-        content.innerHTML += `<p>${JSON.stringify(obj.users)}</p>`;
+        //If we have a message, display it.
+        if (obj.users) {
+          content.innerHTML += `<p>${JSON.stringify(obj.users)}</p>`;
+        }
+        else if (obj.message) {
+          content.innerHTML += `<p>${obj.message}</p>`;
+        }
       }
-      else if(obj.message){
-        content.innerHTML += `<p>${obj.message}</p>`;
-      }
-      }
-      catch (e){
+      catch (e) {
         console.log(e)
       }
 
@@ -66,7 +66,7 @@
       const ageField = nameForm.querySelector('#ageField');
 
       //Build a data string in the FORM-URLENCODED format.
-      const formData = `name=${nameField.value}&age=${ageField.value}`;
+      const formData = `name=${nameField.value}&walkers=${getWalkers()}`;
 
       //Make a fetch request and await a response. Set the method to
       //the one provided by the form (POST). Set the headers. Content-Type
@@ -78,7 +78,7 @@
           'Content-Type': 'application/x-www-form-urlencoded',
           'Accept': 'application/json',
         },
-        body: formData,
+        body: formData
       });
 
       //Once we have a response, handle it.
@@ -100,7 +100,7 @@
       handleResponse(response);
     }
 
-    
+
 
     //Init function is called when window.onload runs (set below).
     const init = () => {
@@ -135,10 +135,10 @@
 <body>
   <canvas height="480" width="640"> This browser is not supported :(</canvas>
   <button id="pause">Pause</button>
-	<button id="nuke">NUKE</button>
+  <button id="nuke">NUKE</button>
   <section id="top">
     <h3>POST Status Code Tests</h3>
-    <form id="nameForm" action="/addUser" method="post">
+    <form id="nameForm" action="/saveWalkers" method="post">
       <label for="name">Name: </label>
       <input id="nameField" type="text" name="name" />
       <label for="age">Age: </label>

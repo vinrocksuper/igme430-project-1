@@ -13,7 +13,7 @@ const jsonUrlStruct = {
     '/notReal': jsonHandler.notFound,
     '/': htmlHandler.getIndex,
     '/style.css': htmlHandler.getCSS,
-    '/src/app.js': htmlHandler.getJS,
+    '/app.js': htmlHandler.getJS,
   },
   HEAD: {
     notFound: jsonHandler.notFoundMeta,
@@ -43,15 +43,14 @@ const parseBody = (request, response, handler) => {
 
 const handlePost = (request, response, parsedUrl) => {
   // If they go to /addUser
-  if (parsedUrl.pathname === '/addUser') {
+  if (parsedUrl.pathname === '/saveWalkers') {
     // Call our below parseBody handler, and in turn pass in the
     // jsonHandler.addUser function as the handler callback function.
-    parseBody(request, response, jsonHandler.addUser);
+    parseBody(request, response, jsonHandler.saveWalkers);
   }
 };
 
 // function to handle requests
-// eslint-disable-next-line consistent-return
 const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
   console.log(parsedUrl.pathname);

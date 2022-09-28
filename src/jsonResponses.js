@@ -1,6 +1,6 @@
 const url = require('url'); // url module
 
-const users = {};
+const walkers = {};
 
 // function to respond with a json object
 // takes request, response, status code and object to send
@@ -11,7 +11,6 @@ const respondJSON = (request, response, status, object) => {
     'Content-Type': 'application/json',
   };
 
-  // console.log(object);
   // send response with json object
   response.writeHead(status, headers);
   response.write(JSON.stringify(object));
@@ -32,30 +31,42 @@ const respondJSONMeta = (request, response, status) => {
   response.end();
 };
 
-const getData = (request, response) => {
-  // json object to send
-  const responseJSON = {
-    message: ' This is a successful response',
-    users,
-  };
-
-  // return 200 with message
-  return respondJSON(request, response, 200, responseJSON);
-};
-
 const badRequestHandler = (request, response) => {
   const responseJSON = {
-    message: ' Missing valid query parameter set to true.',
+    message: ' Name is not found.',
     id: 'badRequest',
   };
 
-  if (url.parse(request.url, true).query.valid === 'true') {
+  console.log(url.parse(request.url, true).query);
+
+  if (walkers[url.parse(request.url, true).query.name]) {
     delete responseJSON.id;
     responseJSON.message = ' This request has the required parameters';
+    responseJSON.walkers = walkers[url.parse(request.url, true).query.name];
     return respondJSON(request, response, 200, responseJSON);
   }
   // return 400 with message
   return respondJSON(request, response, 400, responseJSON);
+};
+
+const getData = (request, response) => {
+  // json object to send
+  const responseJSON = {
+    message: ' This is a successful response',
+
+  };
+
+  const { name } = url.parse(request.url, true);
+
+  console.log(name);
+
+  // If the saved name exists, then send it
+  if (walkers[name]) {
+    responseJSON.walkers = walkers[name];
+    // return 200 with message
+    return respondJSON(request, response, 200, responseJSON);
+  }
+  return badRequestHandler(request, response);
 };
 
 // function for 404 not found requests with message
@@ -84,25 +95,26 @@ const getDataMeta = (request, response) => {
   respondJSONMeta(request, response, 200);
 };
 
-const addUser = async (request, response, body) => {
+const saveWalkers = async (request, response, body) => {
   const responseJSON = {
-    message: 'Name and age are both required.',
+    message: 'Name is required to save walkers',
   };
 
-  if (!body.age || !body.name) {
+  if (!body.name) {
     responseJSON.id = 'missingParams';
     return respondJSON(request, response, 400, responseJSON);
   }
 
   let responseCode = 204; // updated by default
 
-  if (!users[body.name]) {
+  if (!walkers[body.name]) {
     responseCode = 201;
-    users[body.name] = {}; // creates a new user if not already made
+    walkers[body.name] = {}; // creates a new user if not already made
   }
 
-  users[body.name].name = body.name;
-  users[body.name].age = body.age;
+  // stores data on serverside
+  // retrieve it by calling the same name
+  walkers[body.name].name = body.name;
 
   if (responseCode === 201) {
     responseJSON.message = 'user created successfully';
@@ -119,5 +131,5 @@ module.exports = {
   notFoundMeta,
   badRequestHandler,
   badRequestHandlerMeta,
-  addUser,
+  saveWalkers,
 };
