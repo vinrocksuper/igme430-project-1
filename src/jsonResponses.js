@@ -37,12 +37,11 @@ const badRequestHandler = (request, response) => {
     id: 'badRequest',
   };
 
-  console.log(url.parse(request.url, true).query);
-
   if (walkers[url.parse(request.url, true).query.name]) {
     delete responseJSON.id;
     responseJSON.message = ' This request has the required parameters';
-    responseJSON.walkers = walkers[url.parse(request.url, true).query.name];
+    responseJSON.user = walkers[url.parse(request.url, true).query.name];
+
     return respondJSON(request, response, 200, responseJSON);
   }
   // return 400 with message
@@ -57,8 +56,6 @@ const getData = (request, response) => {
   };
 
   const { name } = url.parse(request.url, true);
-
-  console.log(name);
 
   // If the saved name exists, then send it
   if (walkers[name]) {
@@ -115,6 +112,7 @@ const saveWalkers = async (request, response, body) => {
   // stores data on serverside
   // retrieve it by calling the same name
   walkers[body.name].name = body.name;
+  walkers[body.name].walkers = body.walkers;
 
   if (responseCode === 201) {
     responseJSON.message = 'user created successfully';

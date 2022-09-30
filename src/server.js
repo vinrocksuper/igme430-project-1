@@ -37,6 +37,7 @@ const parseBody = (request, response, handler) => {
   request.on('end', () => {
     const bodyString = Buffer.concat(body).toString();
     const bodyParams = query.parse(bodyString);
+
     handler(request, response, bodyParams);
   });
 };
@@ -53,16 +54,13 @@ const handlePost = (request, response, parsedUrl) => {
 // function to handle requests
 const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
-  console.log(parsedUrl.pathname);
   if (request.method === 'POST') {
     handlePost(request, response, parsedUrl);
   } else if (request.method === 'GET' || request.method === 'HEAD') {
-    console.log(request.method);
     if (!jsonUrlStruct[request.method]) {
       return jsonUrlStruct.HEAD.notFound(request, response);
     }
     if (jsonUrlStruct[request.method][parsedUrl.pathname]) {
-      console.log(parsedUrl.pathname);
       jsonUrlStruct[request.method][parsedUrl.pathname](request, response);
     } else {
       jsonUrlStruct[request.method].notFound(request, response);
