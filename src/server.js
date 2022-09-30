@@ -61,11 +61,11 @@ const onRequest = (request, response) => {
       return jsonUrlStruct.HEAD.notFound(request, response);
     }
     if (jsonUrlStruct[request.method][parsedUrl.pathname]) {
-      jsonUrlStruct[request.method][parsedUrl.pathname](request, response);
-    } else {
-      jsonUrlStruct[request.method].notFound(request, response);
+      return jsonUrlStruct[request.method][parsedUrl.pathname](request, response);
     }
+    return jsonUrlStruct[request.method].notFound(request, response);
   }
+  return jsonUrlStruct.GET.notFound(request, response);
 };
 
 // start server
