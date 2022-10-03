@@ -55,8 +55,8 @@ const handlePost = (request, response, parsedUrl) => {
 const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
   if (request.method === 'POST') {
-    handlePost(request, response, parsedUrl);
-  } else if (request.method === 'GET' || request.method === 'HEAD') {
+    return handlePost(request, response, parsedUrl);
+  } if (request.method === 'GET' || request.method === 'HEAD') {
     if (!jsonUrlStruct[request.method]) {
       return jsonUrlStruct.HEAD.notFound(request, response);
     }
