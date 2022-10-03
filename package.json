@@ -22,5 +22,9 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0"
   },
-  "homepage": "https://github.com/vinrocksuper/igme430-project-1#readme"
+  "homepage": "https://github.com/vinrocksuper/igme430-project-1#readme",
+  "dependencies": {
+    "bulma": "^0.9.4",
+    "font-awesome": "^4.7.0"
+  }
 }

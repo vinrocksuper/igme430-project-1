@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Walker++</title>
+	<link href="css/app.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+		integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/main.css">
+	<script type="module" src="src/canvas-controller.js"></script>
+	<script type='module' src='src/init.js'></script>
+</head>
+
+<body class="disable-select has-background-grey-lighter">
+	<nav class="navbar has-shadow is-white">
+		<app-navbar data-selected-page="app"></app-navbar>
+	</nav>
+	<br>
+	<div class="pb-6">
+		<div class="columns is-centered">
+			<div class="column">
+				<section class="has-text-centered">
+					<h2 class="is-size-3">Click Controls:</h2>
+					<input type="radio" id="customRB" name="click_control" value="custom" checked>
+					<label for="customRB">Create Custom Walker</label><br>
+					<input type="radio" id="spawnRB" name="click_control" value="spawn">
+					<label for="spawnRB">Create Random Walker</label><br>
+					<input type="radio" id="centerRB" name="click_control" value="center">
+					<label for="centerRB">Change Center</label><br>
+					<input type="radio" id="foodRB" name="click_control" value="food">
+					<label for="foodRB">Create Food</label><br>
+
+					<hr class="has-background-black ml-2">
+					<section class="has-text-centered">
+						<h2 class="is-size-3">Build Your Own Walker!</h2>
+						<div class="my-1 columns">
+							<div class="column ml-2">
+								<canvas width="100" height="100"></canvas>
+							</div>
+							<div class="column is-1">
+								<span id="redVal"> 255 </span>
+								<span id="greenVal"> 255 </span>
+								<span id="blueVal"> 255 </span>
+							</div>
+							<div class="column mr-4">
+								<span>R: 0</span> <input type="range" min="0" max="255" value="255" class="slider"
+									id="redChannel"> <span>255</span> <br>
+								<span>G: 0</span> <input type="range" min="0" max="255" value="255" class="slider"
+									id="greenChannel"> <span>255</span> <br>
+								<span>B: 0</span> <input type="range" min="0" max="255" value="255" class="slider"
+									id="blueChannel"> <span>255</span>
+							</div>
+						</div>
+						<label for="lifeSlider" class="mr-6">Walker Lifespan </label> <label for="sizeSlider"
+							class="ml-6 mr-5">Walker Size</label> <br>
+						<span>1 </span> <input type="range" min="1" max="100" value="10" class="slider halfSlider"
+							id="lifeSlider">
+						<span>100</span>
+
+						<span class="ml-6">10 </span> <input type="range" min="10" max="100" value="10"
+							class="slider halfSlider" id="sizeSlider">
+						<span>100</span>
+						<br>
+						<label for="speedSlider">Walker Speed </label> <br>
+						<span>1 </span> <input type="range" min="1" max="5" value="2" class="slider halfSlider"
+							id="speedSlider">
+						<span>5</span>
+
+
+
+					</section>
+
+				</section>
+			</div>
+			<div class="column">
+				<canvas width="640" height="480">
+					This browser is not supported :(
+				</canvas>
+			</div>
+			<div class="column">
+				<section>
+					<h2 class="is-size-3">Gamemodes and Presets</h2>
+					<select id="gamemodeDD" name="gamemodes">
+						<option value="none">None</option>
+						<option value="control_point">Control Points</option>
+						<option value="zombies">Zombies</option>
+						<option value="vomit">Vomit</option>
+						<option value="rainbow">Rainbow</option>
+					</select>
+					<div id="tooltips">
+						<div id="control_tooltip" class="invisible">
+							Two teams fight for control of the control point. Each Walker that stays on a control point
+							increases the team's points by 1 (per frame). <br> Additional walkers can be created if
+							either
+							of the
+							two create walker buttons are enabled. <br>
+							<br>
+							<i>Custom walkers are disabled in this mode.</i>
+						</div>
+						<div id="zombies_tooltip" class="invisible">
+							Infected Walkers seek out the uninfected who try to survive, albeit poorly. <br> Additional
+							walkers
+							can be created if either of the two create walker buttons are enabled. <br>
+							<br>
+							<i>Custom walkers are disabled in this mode.</i>
+						</div>
+						<div id="vomit_tooltip" class="invisible">
+							<b class="has-text-danger is-size-1"> WARNING</b>
+							<div>This preset has flashing lights and bright colors that could trigger seizures for
+								people
+								with photosensitive epilepsy.
+								<br>
+								Viewer discretion is advised.
+							</div>
+							<b class="has-text-primary-dark">HORF</b>
+						</div>
+						<div id='rainbow_tooltip' class="invisible">
+							<b class="has-text-danger is-size-1"> WARNING</b>
+							<div>This preset has flashing lights and bright colors that could trigger seizures for
+								people
+								with photosensitive epilepsy.
+								<br>
+								Viewer discretion is advised.
+							</div>
+							Just draws a cascading <span id="rainbow">rainbow </span>:D
+							<br>
+							<br>
+							<i>Click controls are disabled in this mode.</i>
+						</div>
+					</div>
+				</section>
+				<hr class="has-background-black mr-2">
+				<section>
+					<h2 class="is-size-3">Gamemode Specific Controls</h2>
+					<label for="controlPointsTeamColor">Spawn for Team </label>
+					<select id="controlPointsTeamColor" name="teamColor" disabled>
+						<option value="red" selected>Red</option>
+						<option value="blue">Blue</option>
+					</select>
+					<br>
+					<label for="zombiesSpawn">Spawn Infected </label>
+					<select id="zombiesSpawn" name="teamInfected" disabled>
+						<option value="green" selected>True</option>
+						<option value="white">False</option>
+					</select>
+					<hr class="has-background-black mr-2">
+					<section id='scoreTally' class="invisible">
+						<h2>Current Score:</h2>
+						<span>Red: </span><span id="redScore"> 0 </span> <br>
+						<span>Blue: </span><span id="blueScore"> 0 </span>
+					</section>
+				</section>
+			</div>
+		</div>
+		<br>
+		<div class="columns is-centered">
+			<button id="pause" class="is-center mx-2"><i class="fas fa-pause visible"></i><i
+					class="fas fa-play invisible"></i></button>
+			<button id="nuke">Clear All</button>
+		</div>
+		<br>
+		<p>No walkers were harmed in the making of this website</p>
+		<custom-footer data-name="Vincent Li"></custom-footer>
+	</div>
+
+</body>
+
+</html>
