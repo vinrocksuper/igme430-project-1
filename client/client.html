@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Simple Http Server</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script type="module" src="app.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
   <script>
     //Handles our FETCH response. This function is async because it
     //contains an await.
@@ -129,7 +131,7 @@
       canvas = document.querySelector('canvas');
       ctx = canvas.getContext('2d');
       ctx.fillStyle = 'black';
-      ctx.fillRect(20, 20, 600, 440);
+      ctx.fillRect(0, 0, 960, 640);
       setInterval(drawEverything, 1000 / fps);
       canvas.onclick = canvasClicked;
       document.querySelectorAll('input[name="click_control"]').forEach((button) => {
@@ -168,7 +170,7 @@
     }
 
     function cls() {
-      ctx.clearRect(0, 0, 640, 480);
+      ctx.clearRect(0, 0, 960, 640);
     }
 
     function flipWeightedCoin(weight = 0.5) {
@@ -378,15 +380,37 @@
 
 <body>
   <div class="columns pb-6">
-    <div class="column"></div>
     <div class="column">
-      <canvas height="480" width="640"> This browser is not supported :(</canvas>
+      <h1 class="has-text-centered is-family-primary has-text-weight-bold is-size-2"> <i
+          class="fas fa-walking pages"></i> Walkers</h1>
+      <h2 class="has-text-centered is-italic is-family-primary is-size-5">Now with saving! </h2>
+      <h3 class="has-text-centered is-italic is-family-primary is-size-7">(Only for half an hour though)</h3>
+      <h3 class="has-text-centered is-italic is-family-primary is-size-7">By: Vincent Li <br> Made for IGME-430:
+        Everybody's favorite class</h3>
+      <hr>
+      <div class="m-2">
+        It's as simple as clicking anywhere on the canvas, then the walkers will, well walk.
+      </div>
+      <ul class="mx-2">
+        <li> Pressing 'Pause' will stop the walkers in their tracks</li>
+        <li> Pressing the bomb icon will bring your walkers to an untimely end</li>
+        <li> To save, simply input a name in the appropriate field and press the save icon</li>
+        <li> To load, input your name and press the load icon</li>
+      </ul>
+
+
+
+
+    </div>
+    <div class="column">
+      <canvas height="640" width="960"> This browser is not supported :(</canvas>
 
       <div class="columns is-centered">
         <div class="column is-half columns is-centered">
-          <div class="column is-half">
-            <button id="pause">Pause</button>
-            <button id="nuke">NUKE</button>
+          <div class="column is-half columns is-centered">
+
+            <button class="mt-5 mx-1" id="pause">Pause</button>
+            <button class="mt-5 mx-1" id="nuke"><i class="fa-solid fa-bomb"></i></button>
           </div>
 
         </div>
@@ -395,34 +419,49 @@
 
     </div>
 
-    <!-- 
-      TODO: FIGURE OUT WHY ICONS AREN'T WORKING
-      <div>
-      <h1>Font-awesome</h1>
-      Notification :
-      <i class='fa-solid fa-floppy-disk' style='font-size:24px'></i>  
-    </div> -->
+
+
 
     <div class="column">
       <section id="top">
-        <h3>Save/Load Canvas</h3>
+        <h3 class="pb-5">Save/Load Canvas</h3>
         <form id="nameForm" action="/saveWalkers" method="post">
-          <label for="name">Name: </label>
-          <input id="nameField" type="text" name="name" />
-          <input type="submit" value="Save" />
+          <div class="columns">
+            <label for="name">Name: </label>
+            <input class='column is-one-third mx-2 py-1 input is-small' id="nameField" type="text" name="name" />
+            <div>
+              <button type="submit" value="save"> <i class="fa-solid fa-upload"></i>
+              </button>
+            </div>
+          </div>
+
         </form>
-        <form id="userForm" action="/getUsers" method="get">
-          <select id='urlField'>
-            <option value='/getUsers'>/getUsers</option>
-          </select>
-          <select id="methodSelect">
-            <option value="get">GET</option>
-            <option value="head">HEAD</option>
-          </select>
-          <input type="submit" value="Load" />
+
+        <form class="mt-4" id="userForm" action="/getUsers" method="get">
+          <div class="columns">
+            <div class="pr-2">
+              <select id='urlField' disabled>
+                <option value='/getUsers'>/getUsers</option>
+              </select>
+            </div>
+            <div class="pr-2">
+              <select id="methodSelect">
+                <option value="get">GET</option>
+                <option value="head">HEAD</option>
+              </select>
+            </div>
+
+            <div>
+              <button type="submit" value="Load"> <i class="fa-solid fa-download"></i>
+              </button>
+            </div>
+          </div>
         </form>
       </section>
       <section id="content">
+        <p>
+          <h1 class="is-size-4 has-text-centered">Messages will appear here!</h1>
+        </p>
       </section>
 
     </div>

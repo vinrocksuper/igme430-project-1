@@ -13,7 +13,6 @@ const jsonUrlStruct = {
     '/notReal': jsonHandler.notFound,
     '/': htmlHandler.getIndex,
     '/style.css': htmlHandler.getCSS,
-    '/app.js': htmlHandler.getJS,
   },
   HEAD: {
     notFound: jsonHandler.notFoundMeta,
@@ -54,6 +53,7 @@ const handlePost = (request, response, parsedUrl) => {
 // function to handle requests
 const onRequest = (request, response) => {
   const parsedUrl = url.parse(request.url);
+  console.log(request.url);
   if (request.method === 'POST') {
     return handlePost(request, response, parsedUrl);
   } if (request.method === 'GET' || request.method === 'HEAD') {
