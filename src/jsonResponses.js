@@ -39,7 +39,7 @@ const badRequestHandler = (request, response) => {
 
   if (walkers[url.parse(request.url, true).query.name]) {
     delete responseJSON.id;
-    responseJSON.message = ' This request has the required parameters';
+    responseJSON.message = 'Loaded!';
     responseJSON.user = walkers[url.parse(request.url, true).query.name];
 
     return respondJSON(request, response, 200, responseJSON);

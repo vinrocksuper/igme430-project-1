@@ -42,8 +42,13 @@
       //sends back json. Await because .json() is an async function.
       try {
         let obj = await response.json();
+        console.log(obj.message,)
         if (obj.user) {
+          if (obj.message) {
+            content.innerHTML += `<p>${obj.message}</p>`;
+          }
           setWalkers(obj.user.walkers);
+
         }
         else if (obj.message) {
           content.innerHTML += `<p>${obj.message}</p>`;
@@ -459,7 +464,7 @@
         </form>
       </section>
       <section id="content">
-        <p>
+        <p class="has-text-centered">
           <h1 class="is-size-4 has-text-centered">Messages will appear here!</h1>
         </p>
       </section>
